@@ -7,7 +7,19 @@
     </div>
 
     <div class="card-body">
-        <form action="{{ route('posts.store') }}" method="post">
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul class="list-group">
+                    @foreach ($errors->all() as $error)
+                        <li class="list-group-item text-danger">
+                            {{ $error }}
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="form-group">
