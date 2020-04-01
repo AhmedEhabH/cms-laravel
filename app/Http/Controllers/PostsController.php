@@ -50,7 +50,8 @@ class PostsController extends Controller
             "title" => $request->title,
             "description" => $request->description,
             "content" => $request->content,
-            "image" => $image
+            "image" => $image,
+            "publish_at" => $request->publish_at,
         ]);
 
         // flash images
