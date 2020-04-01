@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use App\Http\Requests\Posts\CreatePostsRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
@@ -42,8 +43,7 @@ class PostsController extends Controller
 
         // upload the image
         $image = $request->image->store('images/posts');
-
-        $request->image->move(public_path('images/posts'), $image);
+        // $request->image->move(public_path('images/posts'), $image);
 
         // create the post
         Post::create([
@@ -107,6 +107,7 @@ class PostsController extends Controller
         $post = Post::withTrashed()->where('id', $id)->firstOrFail();
 
         if($post->trashed()){
+            Storage::delete($post->image);
             $post->forceDelete();
         } else {
             $post->delete();
