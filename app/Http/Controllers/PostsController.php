@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Post;
 use App\Http\Requests\Posts\CreatePostsRequest;
 use App\Http\Requests\Posts\UpdatePostRequest;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
@@ -29,7 +28,7 @@ class PostsController extends Controller
     public function create()
     {
         //
-        return view('posts.create');
+        return view('posts.create')->with('categories', Category::all());
     }
 
     /**
@@ -53,6 +52,7 @@ class PostsController extends Controller
             "content" => $request->content,
             "image" => $image,
             "publish_at" => $request->publish_at,
+            "category_id" => $request->category,
         ]);
 
         // flash images
@@ -82,7 +82,7 @@ class PostsController extends Controller
     public function edit(Post $post)
     {
         //
-        return view('posts.create')->with('post', $post);
+        return view('posts.create')->with('post', $post)->with('categories', Category::all());
     }
 
     /**
@@ -96,6 +96,7 @@ class PostsController extends Controller
     {
         //
         $data = $request->only('title', 'description', 'published_at', 'content');
+        $data['category_id'] = $request->category;
 
         // Check if new image
         // // upload it
