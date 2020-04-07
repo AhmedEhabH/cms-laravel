@@ -8,7 +8,7 @@
     </div>
 
     <div class="card-body">
-        @if($errors->any())
+        {{-- @if($errors->any())
             <div class="alert alert-danger">
                 <ul class="list-group">
                     @foreach ($errors->all() as $error)
@@ -18,7 +18,8 @@
                     @endforeach
                 </ul>
             </div>
-        @endif
+        @endif --}}
+        @include('partials.error')
         <form action="{{ isset($category)? route('categories.update', $category->id) : route('categories.store') }}" method="POST">
             @csrf
             {{-- @method('PUT') --}}
