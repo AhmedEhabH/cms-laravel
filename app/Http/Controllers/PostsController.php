@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Post;
+use App\Tag;
+
 use App\Http\Requests\Posts\CreatePostsRequest;
 use App\Http\Requests\Posts\UpdatePostRequest;
 
@@ -34,7 +36,7 @@ class PostsController extends Controller
     public function create()
     {
         //
-        return view('posts.create')->with('categories', Category::all());
+        return view('posts.create')->with('categories', Category::all())->with('tags', Tag::all());
     }
 
     /**
@@ -47,12 +49,14 @@ class PostsController extends Controller
     {
         //
 
+        // dd($request->all());
+
         // upload the image
         $image = $request->image->store('images/posts');
         // $request->image->move(public_path('images/posts'), $image);
 
         // create the post
-        Post::create([
+        $post = Post::create([
             "title" => $request->title,
             "description" => $request->description,
             "content" => $request->content,
@@ -60,6 +64,11 @@ class PostsController extends Controller
             "publish_at" => $request->publish_at,
             "category_id" => $request->category,
         ]);
+
+        if($request->tags)
+        {
+            $post->tags()->attach($request->tags);
+        }
 
         // flash images
         session()->flash('success', 'Post created successfully.');
@@ -88,7 +97,8 @@ class PostsController extends Controller
     public function edit(Post $post)
     {
         //
-        return view('posts.create')->with('post', $post)->with('categories', Category::all());
+        // dd($post->tags->pluck('id')->toArray());
+        return view('posts.create')->with('post', $post)->with('categories', Category::all())->with('tags', Tag::all());
     }
 
     /**
@@ -113,6 +123,11 @@ class PostsController extends Controller
             $post->deleteImage();
 
             $data['image'] = $image;
+        }
+
+        if($request->tags)
+        {
+            $post->tags()->sync($request->tags);
         }
 
         // update attributes

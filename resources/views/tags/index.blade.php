@@ -18,9 +18,9 @@
                     <th>
                         Name
                     </th>
-                    {{-- <th>
+                    <th>
                         Posts count
-                    </th> --}}
+                    </th>
                     <th></th>
                     <tbody>
                         @foreach ($tags as $tag)
@@ -28,9 +28,9 @@
                                 <td>
                                     {{ $tag->name }}
                                 </td>
-                                {{-- <td>
+                                <td>
                                     {{ $tag->posts->count() }}
-                                </td> --}}
+                                </td>
                                 <td>
                                 <a href="{{ route('tags.edit', $tag->id) }}" class="btn btn-info btn-sm">Edit</a>
                                 <button class="btn btn-danger btn-sm" onclick="handleDelete({{ $tag->id }})">

@@ -29,7 +29,6 @@
 
             <div class="form-group">
                 <label for="content">Content</label>
-                {{-- <textarea class="form-control" name="content" id="content" cols="5" rows="5"></textarea> --}}
                 <input id="content" type="hidden" name="content" value="{{isset($post)?$post->content:''}}">
                 <trix-editor input="content" name=""></trix-editor>
             </div>
@@ -65,6 +64,23 @@
                 </select>
             </div>
 
+            @if ($tags->count() > 0)
+                <div class="form-group">
+                    <label for="tags">Tags</label>
+                    <select name="tags[]" id="tags" class="form-control tags-selector" multiple>
+                        @foreach ($tags as $tag)
+                            <option value="{{ $tag->id }}"
+                                @if ($post->hasTag($tag->id))
+                                    selected
+                                @endif
+                                >
+                                {{ $tag->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            @endif
+
             <div class="form-group">
                 <button type="submit" class="btn btn-success">
                     {{isset($post)?"Update Post":"Create Post"}}
@@ -79,14 +95,22 @@
 @section('scripts')
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.1/trix.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     <script>
         flatpickr('#published_at',{
             enableTime:true,
         })
+
+        $(document).ready(function() {
+            $('.tags-selector').select2();
+        });
+
     </script>
+
 @endsection
 
 @section('css')
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.1/trix.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
