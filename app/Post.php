@@ -47,4 +47,9 @@ class Post extends Model
     {
         return in_array($tagId, $this->tags->pluck('id')->toArray());
     }
+
+    public function hasCategory($categoryId)
+    {
+        return $this->category_id == $categoryId;
+    }
 }

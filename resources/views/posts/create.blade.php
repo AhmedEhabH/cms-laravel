@@ -70,7 +70,7 @@
                     <select name="tags[]" id="tags" class="form-control tags-selector" multiple>
                         @foreach ($tags as $tag)
                             <option value="{{ $tag->id }}"
-                                @if ($post->hasTag($tag->id))
+                                @if (isset($post) && $post->hasTag($tag->id))
                                     selected
                                 @endif
                                 >
