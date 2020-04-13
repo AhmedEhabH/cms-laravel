@@ -1,12 +1,16 @@
 <?php
 
-use Illuminate\Database\Seeder;
+use App\Tag;
 
 use App\Post;
 
+use App\User;
+
 use App\Category;
 
-use App\Tag;
+use Illuminate\Support\Facades\Hash;
+
+use Illuminate\Database\Seeder;
 
 class PostsTableSeeder extends Seeder
 {
@@ -18,8 +22,20 @@ class PostsTableSeeder extends Seeder
     public function run()
     {
         //
+        $author1 = User::create([
+            "name" => "John Doe",
+            "email" => "john@doe.com",
+            "password" => Hash::make('password'),
+        ]);
+
+        $author2 = User::create([
+            "name" => "Jane Doe",
+            "email" => "jane@doe.com",
+            "password" => Hash::make('password'),
+        ]);
+
         $category1 = Category::create([
-            'name' => 'News'
+            "name" => "News"
         ]);
 
         $category2 = Category::create([
@@ -30,28 +46,17 @@ class PostsTableSeeder extends Seeder
             'name' => 'Partnership'
         ]);
 
-        // $category4 = Category::create([
-        //     'name' => 'Hiring'
-        // ]);
-
-        // $category5 = Category::create([
-        //     'name' => 'News'
-        // ]);
-
-        // $category6 = Category::create([
-        //     'name' => 'News'
-        // ]);
-
         $post1 = Post::create([
             'title' => 'We relocated our office to a new designed garage',
             'description' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
             'content' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
             "category_id" => $category1->id,
             "image" => 'images/posts/1.jpg',
+            "user_id" => $author1->id,
 
         ]);
 
-        $post2 = Post::create([
+        $post2 = $author2->posts()->create([
             'title' => 'Top 5 brilliant content marketing strategies',
             'description' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
             'content' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -60,7 +65,7 @@ class PostsTableSeeder extends Seeder
 
         ]);
 
-        $post3 = Post::create([
+        $post3 = $author1->posts()->create([
             'title' => 'Best practices for minimalist design with example',
             'description' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
             'content' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -69,7 +74,7 @@ class PostsTableSeeder extends Seeder
 
         ]);
 
-        $post4 = Post::create([
+        $post4 = $author2->posts()->create([
             'title' => 'Congratulate and thank to Maryam for joining our team',
             'description' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
             'content' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -77,21 +82,6 @@ class PostsTableSeeder extends Seeder
             "image" => 'images/posts/4.jpg',
 
         ]);
-
-        // $post5 = Post::create([
-        //     'title' => 'New published books to read by a product designer',
-        //     'description' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        //     'content' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        //     "category_id" => $category1->id,
-
-        // ]);
-
-        // $post6 = Post::create([
-        //     'title' => 'This is why it\'s time to ditch dress codes at work',
-        //     'description' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        //     'content' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        //     "category_id" => $category3->id,
-        // ]);
 
         $tag1 = Tag::Create([
             'name' => "Job"
