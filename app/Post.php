@@ -57,4 +57,14 @@ class Post extends Model
     {
         return $this->category_id == $categoryId;
     }
+
+    public function scopeSearched($query)
+    {
+        $search = request()->query('search');
+        if(!$search)
+        {
+            return $query;
+        }
+        return $query->where('title', 'LIKE', "%{$search}%");
+    }
 }
