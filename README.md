@@ -1,3 +1,18 @@
+# To run Project
+*   ```composer install```
+*   ```npm install``` or ```yarn install```
+*   ```cp .env.example .env```
+    *   modify **.env** file add your databse username and password
+*   ```php artisan key:generate```
+*   ```php artisan migrate```
+*   ```php artisan db:seed```
+*   make shortuct for **/storage/app/public/** in **/public/** called **storage**
+    - path should be ```/public/storage/images/posts/```
+*   ```php artisan serve```
+
+
+
+
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
 <p align="center">
